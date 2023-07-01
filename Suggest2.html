@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Suggestion Form</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #36393F;
+      color: #FFF;
+    }
+
+    h1,h2,h3,h4,h5,h6 {
+      text-align: center;
+      color: #FFF;
+      transition: color 0.3s ease;
+    }
+
+    form {
+      max-width: 400px;
+      margin: 0 auto;
+      background-color: #2C2F33;
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      color: #7289DA;
+    }
+
+    input[type="text"],
+    textarea {
+      width: 100%;
+      padding: 5px;
+      margin-top: 5px;
+      background-color: #7289DA;
+      color: #FFF;
+      border: none;
+      border-radius: 4px;
+      resize: none;
+    }
+
+    button[type="submit"] {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #7289DA;
+      color: #FFF;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h2>Suggestion Form</h2>
+  <form id="suggestionForm">
+    <label for="name">Name/Nickname:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="suggestion">Suggestion:</label>
+    <textarea id="suggestion" name="suggestion" required></textarea>
+
+    <button type="submit">Submit</button>
+  </form>
+
+
+
+  <script>
+
+    document.getElementById("suggestionForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      var nameInput = document.getElementById("name");
+      var suggestionInput = document.getElementById("suggestion");
+
+      var name = nameInput.value;
+      var suggestion = suggestionInput.value;
+
+      var message = name + " has suggested: ||" + suggestion + "||";
+
+      var payload = {
+        content: message
+      };
+
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "https://discord.com/api/webhooks/1124552742078259310/jrCR6VsRxGyi4maLvZ5AyvNgPaapt5_7Tojc1WoWKqFsQdaNUS3jJ4Bhnn9PpRVCmdqQ", true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.send(JSON.stringify(payload));
+
+      // Reset the form after submitting
+      nameInput.value = "";
+      suggestionInput.value = "";
+    });
+  </script>
+</body>
+</html>
